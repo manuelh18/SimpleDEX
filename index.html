@@ -1,0 +1,95 @@
+<!-- /simple-dex/html/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple DEX - Uniswap Style</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://uniswap.org/favicon.ico" alt="Uniswap Logo" />
+                <h1>Simple DEX</h1>
+            </div>
+            <p>Swap tokens on a decentralized exchange</p>
+        </header>
+
+        <!-- Swap Section -->
+        <div class="swap-container">
+            <div class="swap-box">
+                <label for="tokenA">From</label>
+                <div class="token-select">
+                    <select id="tokenASelect">
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="USDT">Tether (USDT)</option>
+                        <option value="DAI">DAI</option>
+                    </select>
+                </div>
+                <input type="number" id="tokenA" placeholder="Amount" min="0" />
+            </div>
+
+            <div class="swap-arrow">
+                <span>&#8595;</span>
+            </div>
+
+            <div class="swap-box">
+                <label for="tokenB">To</label>
+                <div class="token-select">
+                    <select id="tokenBSelect">
+                        <option value="USDT">Tether (USDT)</option>
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="DAI">DAI</option>
+                    </select>
+                </div>
+                <input type="number" id="tokenB" placeholder="Amount" disabled />
+            </div>
+        </div>
+
+        <div class="swap-footer">
+            <button id="swapBtn" class="primary-btn">Swap</button>
+        </div>
+
+        <!-- Price Info Section -->
+        <div class="price-info">
+            <p id="price">1 ETH = 2000 USDT</p>
+        </div>
+
+        <!-- Wallet Balance Section -->
+        <div class="wallet-balance">
+            <h3>Your Wallet</h3>
+            <ul>
+                <li>ETH: 5.0</li>
+                <li>USDT: 10000</li>
+                <li>DAI: 5000</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('swapBtn').addEventListener('click', function() {
+            const tokenAAmount = parseFloat(document.getElementById('tokenA').value);
+            if (isNaN(tokenAAmount) || tokenAAmount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+
+            const tokenA = document.getElementById('tokenASelect').value;
+            const tokenB = document.getElementById('tokenBSelect').value;
+
+            let tokenBAmount = 0;
+            if (tokenA === 'ETH' && tokenB === 'USDT') {
+                tokenBAmount = tokenAAmount * 2000;
+            } else if (tokenA === 'USDT' && tokenB === 'ETH') {
+                tokenBAmount = tokenAAmount / 2000;
+            }
+
+            document.getElementById('tokenB').value = tokenBAmount;
+        });
+    </script>
+</body>
+</html>
